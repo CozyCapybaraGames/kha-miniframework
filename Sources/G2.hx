@@ -352,5 +352,5 @@ abstract G2(kha.graphics2.Graphics) to kha.graphics2.Graphics from kha.graphics2
 			}
 		}
 		this.drawCharacters(text, start, length, x + xoffset, y + yoffset);
-	} 
+	}
 }

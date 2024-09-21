@@ -13,6 +13,30 @@ class GameLoop {
         final updateFps = opts.updateFps ?? 60;
         final updateDelta = 1 / updateFps;
 
+        var designW: Int;
+        var designH: Int;
+
+        switch (opts.designSize) {
+            case Tiny_16_9:
+                designW = 256;
+                designH = 144;
+            case Small_16_9:
+                designW = 384;
+                designH = 216;
+            case Medium_16_9:
+                designW = 512;
+                designH = 288;
+            case Large_16_9:
+                designW = 768;
+                designH = 432;
+            case VeryLarge_16_9:
+                designW = 1024;
+                designH = 576;
+            case Custom(width, height):
+                designW = width;
+                designH = height;
+        }
+
         var windowMode: kha.WindowMode;
         var width: Null<Int> = null;
         var height: Null<Int> = null;
@@ -24,8 +48,8 @@ class GameLoop {
                 windowMode = Fullscreen;
             case Windowed(scale):
                 windowMode = Windowed;
-                width = opts.designWidth * scale;
-                height = opts.designHeight * scale;
+                width = designW * scale;
+                height = designH * scale;
         }
 
         System.start(
@@ -41,7 +65,7 @@ class GameLoop {
             (_) -> {
                 Assets.loadEverything(() -> {
                     Random.init(rngSeed);
-                    Screen.init(opts.designWidth, opts.designHeight);
+                    Screen.init(designW, designH);
 
                     currentScene = opts.initialScene();
 
@@ -105,9 +129,11 @@ class GameLoopOptions {
     @:optional
     public final updateFps: Null<Int>;
 
+    @:optional
+    public final designSize: DesignSize = Medium_16_9;
+    
     public final windowTitle: String;
-    public final designWidth: Int;
-    public final designHeight: Int;
+
     public final windowMode: WindowMode;
 
     public final initialScene: () -> Scene;
@@ -117,4 +143,31 @@ enum WindowMode {
     Fullscreen;
     Windowed(?scale: Int);
     BorderlessFullscreen;
+}
+
+enum DesignSize {
+    /**
+     * **`256 x 144`**
+     * 
+     * For context, this is a little larger than a GBA screen.
+     */
+    Tiny_16_9;
+    /**
+     * **`384 x 216`**
+     */
+    Small_16_9;
+    /**
+     * **`512 x 288`**
+     */
+    Medium_16_9;
+    /**
+     * **`768 x 432`**
+     */
+    Large_16_9;
+    /**
+     * **`1024 x 576`**
+     */
+    VeryLarge_16_9;
+
+    Custom(width: Int, height: Int);
 }
