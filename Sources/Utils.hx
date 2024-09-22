@@ -21,11 +21,15 @@ class Utils {
         return macro trace($v{msg});
     }
 
-    public static inline function Lerp(start: Float, end: Float, t: Float) {
+    public static inline function lerp(start: Float, end: Float, t: Float) {
         return start + (end-start)*t;
     }
 
-    public static inline function LerpInt(start: Int, end: Int, t: Float) {
-        return Math.floor(Lerp(start, end, t));
+    public static inline function lerpInt(start: Int, end: Int, t: Float) {
+        return Math.floor(lerp(start, end, t));
+    }
+
+    public static inline function mid(min: Float, v: Float, max: Float) {
+        return Math.max(min, Math.min(v, max));
     }
 }

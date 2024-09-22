@@ -10,6 +10,11 @@ import kha.Macros;
 #end
 
 class Screen {
+    static var screenshakeMaxT = 0;
+    static var screenshakeMaxAmount = 0.0;
+    static var screenshakeT = 0;
+    public static var screenshakeAmount(default, null) = 0.0;
+
     public static var designWidth(default, null) = 0;    
     public static var designHeight(default, null) = 0;
 
@@ -37,6 +42,23 @@ class Screen {
         
         win.notifyOnResize(onResize);
         onResize(win.width, win.height);
+    }
+
+    public static function update() {
+        if (screenshakeT > 0) {
+            screenshakeAmount = Utils.lerp(0, screenshakeMaxAmount, screenshakeT/screenshakeMaxT);
+            screenshakeT--;
+        } else {
+            screenshakeT = 0;
+            screenshakeAmount = 0;
+        }
+    }
+
+    public static function startScreenshake(amount: Float, time: Int) {
+        screenshakeMaxAmount = amount;
+        screenshakeMaxT = time;
+
+        screenshakeT = time;
     }
 
     static function htmlResize() {

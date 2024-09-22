@@ -82,6 +82,7 @@ class GameLoop {
                         accumulator += frameTime;
 
                         if (accumulator >= updateDelta) {
+                            Screen.update();
                             currentScene.update();
                         }
 
@@ -98,7 +99,12 @@ class GameLoop {
 
                         currentScene.drawBackground(g, g4, alpha);
 
-                        g.pushTransformation(Screen.transform);
+                        g.pushTransformation(Screen.transform.multmat(
+                            M3.translation(
+                                Random.getIn(-1, 1) * Screen.screenshakeAmount,
+                                Random.getIn(-1, 1) * Screen.screenshakeAmount,
+                            )
+                        ));
                         g.scissor(
                             Screen.offsetX,
                             Screen.offsetY,
