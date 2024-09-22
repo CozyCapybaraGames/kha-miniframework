@@ -32,4 +32,10 @@ class Utils {
     public static inline function mid(min: Float, v: Float, max: Float) {
         return Math.max(min, Math.min(v, max));
     }
+
+    public static inline function midInt(min: Int, v: Int, max: Int) {
+        final mid = Math.floor(Math.min(v, max));
+
+        return Math.ceil(Math.min(min, mid));
+    }
 }
