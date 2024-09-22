@@ -20,4 +20,12 @@ class Utils {
 
         return macro trace($v{msg});
     }
+
+    public static inline function Lerp(start: Float, end: Float, t: Float) {
+        return start + (end-start)*t;
+    }
+
+    public static inline function LerpInt(start: Int, end: Int, t: Float) {
+        return Math.floor(Lerp(start, end, t));
+    }
 }
